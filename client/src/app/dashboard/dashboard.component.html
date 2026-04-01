@@ -1,0 +1,80 @@
+<section class="dashboard">
+  <article class="summary-card">
+    <div class="summary-header">
+      <div>
+        <p class="eyebrow">Signed in</p>
+        <h2>{{ currentUser?.name }}</h2>
+        <p class="muted-text">{{ currentUser?.email }}</p>
+      </div>
+    </div>
+
+    <div class="summary-metrics">
+      <a class="metric-card" routerLink="/tasks/all">
+        <span>{{ todos.length }}</span>
+        <p>Total tasks</p>
+      </a>
+      <a class="metric-card completed" routerLink="/tasks/completed">
+        <span>{{ completedCount }}</span>
+        <p>Completed</p>
+      </a>
+      <a class="metric-card pending" routerLink="/tasks/pending">
+        <span>{{ pendingCount }}</span>
+        <p>Pending</p>
+      </a>
+    </div>
+  </article>
+
+  <article class="workspace-card">
+    <form class="todo-form" (ngSubmit)="addTodo()" #todoForm="ngForm">
+      <div class="list-header">
+        <h2>Create a task</h2>
+        <button type="button" class="ghost-button" (click)="loadTodos()" [disabled]="isLoading">
+          {{ isLoading ? 'Refreshing...' : 'Refresh' }}
+        </button>
+      </div>
+
+      <label class="field">
+        <span>Task title</span>
+        <input
+          type="text"
+          name="title"
+          [(ngModel)]="newTodo.title"
+          placeholder="What needs to get done?"
+          required
+        />
+      </label>
+
+      <label class="field">
+        <span>Description</span>
+        <textarea
+          name="description"
+          [(ngModel)]="newTodo.description"
+          rows="3"
+          placeholder="Add details, context, or notes"
+        ></textarea>
+      </label>
+
+      <div class="helper-actions">
+        <button
+          type="button"
+          class="secondary-button"
+          (click)="suggestDescription()"
+          [disabled]="isGeneratingDescription"
+        >
+          {{ isGeneratingDescription ? 'Generating...' : 'Help me write description' }}
+        </button>
+        <p class="helper-text">Optional Gemini help. You can still write the description manually.</p>
+      </div>
+
+      <button type="submit" class="primary-button" [disabled]="isSaving || todoForm.invalid">
+        {{ isSaving ? 'Saving...' : 'Add todo' }}
+      </button>
+    </form>
+
+    <p class="status-card" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+    <div class="dashboard-note">
+      Click a card to open the shared task page filtered by all, completed, or pending items.
+    </div>
+  </article>
+</section>

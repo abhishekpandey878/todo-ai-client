@@ -1,0 +1,72 @@
+<section class="hero">
+  <div class="hero-copy-block">
+    <p class="eyebrow">Secure MEAN Todo App</p>
+    <h1>Log in, stay protected, and keep your tasks private.</h1>
+    <p class="hero-copy">
+      JWT authentication protects every todo route, and Angular automatically sends the bearer
+      token in the header for each API request.
+    </p>
+  </div>
+
+  <section class="auth-card">
+    <div class="auth-toggle">
+      <button
+        type="button"
+        [class.active]="authMode === 'login'"
+        (click)="switchAuthMode('login')"
+      >
+        Login
+      </button>
+      <button
+        type="button"
+        [class.active]="authMode === 'register'"
+        [disabled]="!registrationEnabled"
+        (click)="switchAuthMode('register')"
+      >
+        Register
+      </button>
+    </div>
+
+    <form class="auth-form" (ngSubmit)="submitAuth()">
+      <label class="field" *ngIf="authMode === 'register'">
+        <span>Name</span>
+        <input
+          type="text"
+          name="name"
+          [(ngModel)]="authForm.name"
+          placeholder="Your full name"
+          required
+        />
+      </label>
+
+      <label class="field">
+        <span>Email</span>
+        <input
+          type="email"
+          name="email"
+          [(ngModel)]="authForm.email"
+          placeholder="you@example.com"
+          required
+        />
+      </label>
+
+      <label class="field">
+        <span>Password</span>
+        <input
+          type="password"
+          name="password"
+          [(ngModel)]="authForm.password"
+          placeholder="Minimum 6 characters"
+          required
+        />
+      </label>
+
+      <p class="inline-success" *ngIf="authSuccessMessage">{{ authSuccessMessage }}</p>
+      <p class="inline-error" *ngIf="authErrorMessage">{{ authErrorMessage }}</p>
+
+      <button type="submit" class="primary-button" [disabled]="isAuthenticating">
+        {{ isAuthenticating ? 'Please wait...' : authMode === 'login' ? 'Login' : 'Create account' }}
+      </button>
+    </form>
+  </section>
+</section>

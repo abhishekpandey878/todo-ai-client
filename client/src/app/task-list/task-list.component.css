@@ -1,0 +1,293 @@
+.task-page {
+  width: min(1120px, 100%);
+  margin: 0 auto;
+}
+
+.task-page-header,
+.todo-item,
+.status-card,
+.empty-state {
+  border: 1px solid rgba(20, 33, 61, 0.08);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
+  backdrop-filter: blur(10px);
+}
+
+.task-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px;
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #fca311;
+}
+
+h1 {
+  margin: 0 0 8px;
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.muted-text {
+  margin: 0;
+  color: #4d5d75;
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.ghost-link,
+.ghost-button,
+.secondary-button,
+.edit-button,
+.save-button,
+.delete-button,
+.switch-button {
+  border: none;
+  border-radius: 999px;
+  padding: 12px 18px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.ghost-link,
+.ghost-button {
+  background: #eef2f7;
+  color: #14213d;
+}
+
+.secondary-button {
+  background: #e7f0ff;
+  color: #184b9b;
+}
+
+.status-card {
+  margin: 18px 0 0;
+  padding: 14px 18px;
+  color: #8f2d56;
+}
+
+.empty-state {
+  margin-top: 18px;
+  padding: 28px;
+  text-align: center;
+  color: #62748e;
+}
+
+.todo-list {
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px;
+}
+
+.toggle-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  flex: 1;
+}
+
+.switch-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: rgba(214, 69, 69, 0.14);
+  color: #a83838;
+}
+
+.switch-button.active {
+  background: rgba(24, 169, 87, 0.16);
+  color: #137a43;
+}
+
+.switch-track {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 52px;
+  height: 30px;
+  border-radius: 999px;
+  background: #d64545;
+  transition: background 0.2s ease;
+}
+
+.switch-button.active .switch-track {
+  background: #18a957;
+}
+
+.switch-thumb {
+  position: absolute;
+  left: 4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #ffffff;
+  transition: transform 0.2s ease;
+}
+
+.switch-button.active .switch-thumb {
+  transform: translateX(22px);
+}
+
+.task-copy h3 {
+  margin: 0 0 6px;
+}
+
+.task-copy h3.completed {
+  text-decoration: line-through;
+  color: #7b8798;
+}
+
+.task-copy p,
+.task-copy small {
+  margin: 0;
+  line-height: 1.5;
+  color: #4d5d75;
+}
+
+.task-copy small {
+  display: block;
+  margin-top: 8px;
+}
+
+.edit-form {
+  width: min(560px, 100%);
+  display: grid;
+  gap: 12px;
+}
+
+.ai-row {
+  display: grid;
+  gap: 8px;
+}
+
+.helper-text {
+  margin: 0;
+  color: #62748e;
+  font-size: 0.95rem;
+}
+
+.edit-field span {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #24344f;
+}
+
+.edit-field input,
+.edit-field textarea {
+  width: 100%;
+  border: 1px solid #d9e0ea;
+  border-radius: 16px;
+  padding: 12px 14px;
+  font: inherit;
+  background: #fffdf8;
+  color: #14213d;
+}
+
+.edit-field textarea {
+  resize: vertical;
+  min-height: 96px;
+}
+
+.edit-actions,
+.row-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.save-button {
+  background: linear-gradient(135deg, #fca311, #ff7b00);
+  color: #ffffff;
+}
+
+.edit-button {
+  background: #eef2f7;
+  color: #14213d;
+}
+
+.delete-button {
+  background: #fff1f2;
+  color: #b42318;
+}
+
+@media (max-width: 800px) {
+  .task-page-header,
+  .todo-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .header-actions,
+  .toggle-row,
+  .edit-actions,
+  .row-actions {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 640px) {
+  .task-page-header,
+  .todo-item,
+  .status-card,
+  .empty-state {
+    border-radius: 18px;
+  }
+
+  .task-page-header {
+    padding: 18px 14px;
+  }
+
+  h1 {
+    font-size: clamp(1.75rem, 8vw, 2.35rem);
+  }
+
+  .todo-item {
+    padding: 16px 14px;
+  }
+
+  .switch-button,
+  .ghost-link,
+  .ghost-button,
+.secondary-button,
+  .edit-button,
+  .save-button,
+  .delete-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .task-copy,
+  .edit-form {
+    width: 100%;
+  }
+
+  .edit-field input,
+  .edit-field textarea {
+    padding: 12px;
+  }
+}

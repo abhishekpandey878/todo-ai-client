@@ -1,0 +1,20 @@
+<main class="app-shell">
+  <header class="topbar">
+    <a class="brand" routerLink="/">
+      <span class="brand-mark">T</span>
+      <span>TodoFlow</span>
+    </a>
+
+    <button *ngIf="isLoggedIn" type="button" class="ghost-button" (click)="logout()">
+      Logout
+    </button>
+  </header>
+
+  <section class="loading-state" *ngIf="isRestoringSession; else appContent">
+    Restoring your session...
+  </section>
+
+  <ng-template #appContent>
+    <router-outlet></router-outlet>
+  </ng-template>
+</main>

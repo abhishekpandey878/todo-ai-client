@@ -1,0 +1,114 @@
+<section class="task-page">
+  <div class="task-page-header">
+    <div>
+      <p class="eyebrow">Shared task page</p>
+      <h1>{{ pageTitle }}</h1>
+      <p class="muted-text">Use the cards from the dashboard to open this page with a different filter.</p>
+    </div>
+
+    <div class="header-actions">
+      <a routerLink="/dashboard" class="ghost-link">Back to dashboard</a>
+      <button type="button" class="ghost-button" (click)="loadTodos()" [disabled]="isLoading">
+        {{ isLoading ? 'Refreshing...' : 'Refresh' }}
+      </button>
+    </div>
+  </div>
+
+  <p class="status-card" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+  <div class="empty-state" *ngIf="!isLoading && filteredTodos.length === 0">
+    No tasks found for this view.
+  </div>
+
+  <ul class="todo-list" *ngIf="filteredTodos.length > 0">
+    <li class="todo-item" *ngFor="let todo of filteredTodos">
+      <div class="toggle-row">
+        <button
+          type="button"
+          class="switch-button"
+          [class.active]="todo.completed"
+          (click)="toggleCompletion(todo)"
+          [attr.aria-pressed]="todo.completed"
+        >
+          <span class="switch-track">
+            <span class="switch-thumb"></span>
+          </span>
+          <span class="switch-label">{{ todo.completed ? 'Completed' : 'Pending' }}</span>
+        </button>
+
+        <div class="task-copy" *ngIf="editingTodoId !== todo._id; else editForm">
+          <h3 [class.completed]="todo.completed">{{ todo.title }}</h3>
+          <p *ngIf="todo.description">{{ todo.description }}</p>
+          <small>Updated {{ todo.updatedAt | date: 'medium' }}</small>
+        </div>
+
+        <ng-template #editForm>
+          <form class="edit-form" (ngSubmit)="saveEdit(todo)">
+            <label class="edit-field">
+              <span>Title</span>
+              <input
+                type="text"
+                name="editTitle-{{ todo._id }}"
+                [(ngModel)]="editDraft.title"
+                required
+              />
+            </label>
+
+            <label class="edit-field">
+              <span>Description</span>
+              <textarea
+                name="editDescription-{{ todo._id }}"
+                [(ngModel)]="editDraft.description"
+                rows="3"
+              ></textarea>
+            </label>
+
+            <div class="ai-row">
+              <button
+                type="button"
+                class="secondary-button"
+                (click)="suggestEditDescription()"
+                [disabled]="generatingTodoId === todo._id"
+              >
+                {{ generatingTodoId === todo._id ? 'Generating...' : 'Help me write description' }}
+              </button>
+              <p class="helper-text">Optional Gemini help. Manual editing still works as usual.</p>
+            </div>
+
+            <div class="edit-actions">
+              <button
+                type="submit"
+                class="save-button"
+                [disabled]="savingTodoId === todo._id"
+              >
+                {{ savingTodoId === todo._id ? 'Saving...' : 'Save' }}
+              </button>
+              <button type="button" class="ghost-button" (click)="cancelEditing()">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </ng-template>
+      </div>
+
+      <div class="row-actions">
+        <button
+          *ngIf="editingTodoId !== todo._id"
+          type="button"
+          class="edit-button"
+          (click)="startEditing(todo)"
+        >
+          Edit
+        </button>
+        <button
+          type="button"
+          class="delete-button"
+          (click)="deleteTodo(todo._id)"
+          [disabled]="savingTodoId === todo._id"
+        >
+          Delete
+        </button>
+      </div>
+    </li>
+  </ul>
+</section>
